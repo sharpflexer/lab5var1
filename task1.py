@@ -20,8 +20,8 @@ def print_uniques_in_random_column(emp_df):
 def print_nans_in_columns(emp_df):
     for column in emp_df:
         count_nan = emp_df[column].isna().sum().sum()
-        print('Столбец : ', column)
-        print('Количество NaN : ', count_nan)
+        print('Столбец : ', column, end='')
+        print(' Количество NaN : ', count_nan)
 
 
 def rename_random_column(emp_df, rename_to):
@@ -69,7 +69,8 @@ def main():
     # 1.7 Вывести индексы строк
     print("Индексы строк")
     for i in emp_df.index:
-        print(i)
+        print(str(i) + ", ", end='')
+    print("")
 
     # 1.8 Вывести содержимое датафрейма как массив.
     print(emp_df.to_numpy())
@@ -90,6 +91,7 @@ def main():
 
     # 1.13 Удалить строки с пропущенными значениями.
     emp_df = emp_df.dropna()
+    print(emp_df)
 
     # 1.14 Удалить дубликаты строк (при наличии).
     emp_df = emp_df.drop_duplicates()
@@ -99,17 +101,19 @@ def main():
     # 1.15 Переименовать два произвольных столбца
     emp_df = rename_random_column(emp_df, "Виноград")
     emp_df = rename_random_column(emp_df, "Яблоко")
+    print(emp_df[["Виноград", "Яблоко"]])
 
     # 1.16 Удалить последний столбец и вставить его в начало датафрейма (первым столбцом)
     emp_df = replace_last_column_to_first(emp_df)
-
+    print(emp_df)
     # 1.16(VERSION 2). Удалить 20 последних строк датафрейма.
     emp_df = emp_df.drop(emp_df.tail(20).index)
-
+    print(emp_df)
     # 1.17. Сформировать из исходного датафрейма датафрейм, содержащий 10 первых строк и 3 первых столбца.
-    new_df = emp_df.head(10)
-    new_df = pd.concat([new_df, emp_df.tail(3)])
-
+    old_df = pd.read_csv(csv)
+    new_df = old_df.head(10)
+    new_df = pd.concat([new_df, old_df.tail(3)])
+    print(new_df)
     # 1.18. Записать полученный датафрейм в файл EXCEL.
     new_df.to_excel("output.xlsx")
 
